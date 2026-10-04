@@ -11,23 +11,29 @@ import { DeleteConfirmModal } from "./modals/delete-confirm-modal";
 import { EditLeadModal } from "./modals/edit-lead-modal";
 import { leadSourceLabels } from "./extras";
 import { MoreActionsMenu } from "./more-actions-menu";
+import { ActivitySection } from "./activity-section";
+import { ArrowLeft, Edit3 } from "lucide-react";
 
 const LeadView = ({ lead }: { lead: Lead }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   return (
-    <div className="py-10 lg:py-14">
+    <div className="py-8 lg:py-10">
       {/* Header */}
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
+      <div className="border-b border-gray-200 pb-7 dark:border-gray-800">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <Link
             href={routes.leads.main}
-            className="inline-flex items-center gap-1 text-sm font-medium text-gray-500 transition-colors duration-150 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-400 dark:hover:text-gray-100 motion-reduce:transition-none"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors duration-150 hover:text-gray-950 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:text-gray-100 motion-reduce:transition-none"
           >
-            <span aria-hidden="true">←</span> Leads
+            <ArrowLeft className="size-4" aria-hidden="true" /> Leads
           </Link>
-          <h1 className="mt-4 truncate text-2xl font-semibold leading-tight sm:text-3xl">
+          <p className="mt-6 text-xs font-medium uppercase tracking-widest text-gray-500 dark:text-gray-500">
+            Lead profile
+          </p>
+          <h1 className="mt-3 truncate text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
             {lead?.name ?? "Untitled lead"}
           </h1>
           {lead?.company && (
@@ -43,33 +49,31 @@ const LeadView = ({ lead }: { lead: Lead }) => {
               .filter(Boolean)
               .join(" · ") || "No source or industry yet"}
           </p>
-          <div className="mt-4">
+          <div className="mt-5">
             <StatusMenu leadId={lead.id} status={lead.status} />
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 pt-1">
+        <div className="flex shrink-0 items-center gap-2 pt-8 sm:pt-10">
           <button
             type="button"
             onClick={() => setEditModalOpen(true)}
-            className="inline-flex min-h-10 items-center justify-center rounded-md border border-gray-200 px-4 text-sm font-medium text-gray-600 transition-colors duration-150 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-gray-800 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:bg-gray-900 dark:hover:text-gray-100 dark:focus-visible:ring-offset-gray-950 motion-reduce:transition-none"
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-600 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50 hover:text-gray-950 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-900 dark:hover:text-gray-100 dark:focus-visible:ring-offset-gray-950 motion-reduce:transition-none"
           >
-            Edit
+            <Edit3 className="size-3.5" aria-hidden="true" /> Edit
           </button>
           <MoreActionsMenu onDeleteClick={() => setDeleteModalOpen(true)} />
         </div>
       </div>
+      </div>
       {/* Two-column body */}
-      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
+      <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
         {/* Left column */}
         <div className="min-w-0 space-y-10">
           {/* Follow-up Section */}
           <FollowUpSection followUp={lead.nextFollowUpAt} leadId={lead.id} />
           {/* Activity Section */}
-          {/* <ActivitySection
-            activities={lead.activities}
-            onAddActivity={handleAddActivity}
-          /> */}
+          <ActivitySection leadId={lead.id} />
         </div>
 
         {/* Right column */}
@@ -80,7 +84,7 @@ const LeadView = ({ lead }: { lead: Lead }) => {
               {lead?.email ? (
                 <a
                   href={`mailto:${lead.email}`}
-                  className="break-all text-sm font-medium text-blue-600 transition-colors duration-150 hover:text-blue-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-500 dark:hover:text-blue-400 motion-reduce:transition-none"
+                  className="break-all text-sm font-medium text-gray-800 transition-colors duration-150 hover:text-gray-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-200 dark:hover:text-gray-400 motion-reduce:transition-none"
                 >
                   {lead?.email}
                 </a>
@@ -95,7 +99,7 @@ const LeadView = ({ lead }: { lead: Lead }) => {
               {lead?.phone ? (
                 <a
                   href={`tel:${lead.phone.replace(/\s+/g, "")}`}
-                  className="text-sm text-gray-900 transition-colors duration-150 hover:text-blue-600 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-100 dark:hover:text-blue-500 motion-reduce:transition-none"
+                  className="text-sm text-gray-900 transition-colors duration-150 hover:text-gray-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-100 dark:hover:text-gray-300 motion-reduce:transition-none"
                 >
                   {lead.phone}
                 </a>
@@ -112,7 +116,7 @@ const LeadView = ({ lead }: { lead: Lead }) => {
                   href={lead?.website}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="break-all text-sm font-medium text-blue-600 transition-colors duration-150 hover:text-blue-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-500 dark:hover:text-blue-400 motion-reduce:transition-none"
+                  className="break-all text-sm font-medium text-gray-800 transition-colors duration-150 hover:text-gray-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-200 dark:hover:text-gray-400 motion-reduce:transition-none"
                 >
                   {lead?.website.replace(/^https?:\/\//, "")}{" "}
                   <span aria-hidden="true">↗</span>
@@ -152,7 +156,10 @@ const LeadView = ({ lead }: { lead: Lead }) => {
 
       {/* Delete Confirmation Modal */}
       {deleteModalOpen && (
-        <DeleteConfirmModal onCancel={() => setDeleteModalOpen(false)} />
+        <DeleteConfirmModal
+          leadId={lead.id}
+          onCancel={() => setDeleteModalOpen(false)}
+        />
       )}
 
       {/* Edit Lead Modal */}

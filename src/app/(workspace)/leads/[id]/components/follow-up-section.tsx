@@ -1,25 +1,37 @@
 import { toast } from "@/components/ui/toast";
 import { useUpdateLead } from "@/hooks/mutate/use-leads";
 import { fmt } from "@/libs/date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+function toDateInputValue(value: string | null) {
+  return value ? value.slice(0, 10) : "";
+}
 
 export function FollowUpSection({
   followUp,
   leadId,
 }: {
-  followUp: string;
+  followUp: string | null;
   leadId: string;
 }) {
   const [editing, setEditing] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(followUp || "");
+  const [selectedDate, setSelectedDate] = useState(() =>
+    toDateInputValue(followUp),
+  );
   const { mutateAsync: updateLead, isPending } = useUpdateLead();
+
+  useEffect(() => {
+    // Keep the date editor synchronized when the refreshed lead changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelectedDate(toDateInputValue(followUp));
+  }, [followUp]);
 
   function handleSave() {
     updateLead(
       {
         id: leadId,
         data: {
-          nextFollowUpAt: selectedDate,
+          nextFollowUpAt: selectedDate || null,
         },
       },
       {
@@ -87,7 +99,7 @@ export function FollowUpSection({
           <button
             type="button"
             onClick={() => {
-              setSelectedDate(followUp || "");
+              setSelectedDate(toDateInputValue(followUp));
               setEditing(true);
             }}
             className="inline-flex min-h-8 items-center rounded-md px-2 text-xs font-medium text-blue-600 transition-colors duration-150 hover:text-blue-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-500 dark:hover:text-blue-400"
@@ -150,7 +162,8 @@ export function FollowUpSection({
               <button
                 type="button"
                 onClick={handleClear}
-                className="inline-flex min-h-9 items-center justify-center rounded-md px-2 text-xs font-medium text-red-600 hover:underline dark:text-red-400"
+                disabled={isPending}
+                className="inline-flex min-h-9 items-center justify-center rounded-md px-2 text-xs font-medium text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-60 dark:text-red-400"
               >
                 Clear follow-up
               </button>

@@ -45,7 +45,7 @@ export function GoogleSignInButton({
       onClick={onClick}
       disabled={disabled || loading}
       aria-busy={loading}
-      className="inline-flex min-h-12 items-center justify-center rounded-md border px-4 text-sm font-medium transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none border-blue-600 bg-blue-600 text-white hover:border-blue-500 hover:bg-blue-500 active:bg-blue-700 w-full gap-3"
+      className="inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-gray-950 px-4 text-sm font-medium text-white transition-colors duration-150 hover:bg-gray-800 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white active:bg-black disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-100 dark:text-gray-950 dark:hover:bg-gray-300 dark:focus-visible:ring-offset-gray-950 motion-reduce:transition-none"
     >
       {loading ? (
         <Loader2 className="size-5 animate-spin" aria-hidden="true" />

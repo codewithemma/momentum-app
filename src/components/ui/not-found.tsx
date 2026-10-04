@@ -1,10 +1,7 @@
 "use client";
 import Link from "next/link";
-import { routes } from "@/libs/routes";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/app/(home)/navbar";
-import Footer from "@/app/(home)/footer";
 
 function VineMark({ className = "" }: { className?: string }) {
   return (
@@ -32,8 +29,6 @@ const NotFoundClientPage = () => {
   const router = useRouter();
   return (
     <div className="flex min-h-screen flex-col bg-stone-50">
-      <Navbar />
-
       <main className="flex flex-1 items-center justify-center px-4 py-16 sm:px-6 lg:py-24">
         <div className="w-full max-w-xl text-center">
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -65,7 +60,7 @@ const NotFoundClientPage = () => {
                 Back to home
               </Link>
               <Link
-                href={routes.shop.products}
+                href="/dashboard"
                 className="flex h-12 flex-1 items-center justify-center border border-stone-900 bg-white text-sm font-semibold tracking-wide text-stone-900 transition-colors hover:bg-stone-900 hover:text-white"
               >
                 Continue shopping
@@ -84,7 +79,6 @@ const NotFoundClientPage = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

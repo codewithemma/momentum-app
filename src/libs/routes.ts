@@ -3,12 +3,12 @@ export const routes = {
     login: "/login",
   },
   leads: {
-    main: "/",
+    main: "/leads",
     new: "/leads/new",
     leadById: (id: string) => `/leads/${id}`,
   },
   dashboard: {
-    home: "/",
+    home: "/dashboard",
   },
   faqs: "/faqs",
   terms: "/terms-and-conditions",

@@ -1,3 +1,5 @@
+import type { ActivityType } from "@/types/common";
+
 export const LEAD_STATUSES = [
   "NEW",
   "CONTACTED",
@@ -22,29 +24,41 @@ export const STATUS_LABELS: Record<LeadStatus, string> = {
 
 export const STATUS_DOT: Record<LeadStatus, string> = {
   NEW: "bg-gray-400",
-  CONTACTED: "bg-blue-500",
-  REPLIED: "bg-blue-500",
+  CONTACTED: "bg-gray-500",
+  REPLIED: "bg-gray-500",
   INTERESTED: "bg-amber-500",
   PROPOSAL: "bg-amber-500",
   WON: "bg-green-500",
   LOST: "bg-red-500",
 };
 
-export const ACTIVITY_TYPES = [
-  "Note",
-  "Contacted",
-  "Replied",
-  "Follow-up",
-  "Meeting",
-  "Proposal",
-  "Status change",
-] as const;
+export const ACTIVITY_TYPES: ActivityType[] = [
+  "LEAD_CREATED",
+  "STATUS_CHANGED",
+  "FOLLOW_UP_SCHEDULED",
+  "FOLLOW_UP_UPDATED",
+  "FOLLOW_UP_CLEARED",
+  "NOTE",
+  "CALL",
+  "EMAIL",
+  "MEETING",
+];
 
-export type ActivityType = (typeof ACTIVITY_TYPES)[number];
+export const ACTIVITY_TYPE_LABELS: Record<ActivityType, string> = {
+  LEAD_CREATED: "Lead created",
+  STATUS_CHANGED: "Status changed",
+  FOLLOW_UP_SCHEDULED: "Follow-up scheduled",
+  FOLLOW_UP_UPDATED: "Follow-up updated",
+  FOLLOW_UP_CLEARED: "Follow-up cleared",
+  NOTE: "Note",
+  CALL: "Call",
+  EMAIL: "Email",
+  MEETING: "Meeting",
+};
 
 export interface ActivityEntry {
   id: string;
-  type: ActivityType | "Lead created";
+  type: ActivityType;
   title: string;
   description: string;
   date: string;

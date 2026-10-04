@@ -11,7 +11,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-gray-200 p-5 dark:border-gray-800 sm:p-6">
+    <section className="border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-950 sm:p-6">
       <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
         {title}
       </h2>
@@ -63,7 +63,7 @@ export function Field({
           <>
             <span
               aria-hidden="true"
-              className="text-blue-600 dark:text-blue-500"
+              className="text-gray-500 dark:text-gray-400"
             >
               *
             </span>

@@ -4,9 +4,9 @@ import { ThemeContext, useLocalTheme } from "@/hooks/use-theme";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Wordmark } from "@/components/ui/wordmark";
 import { Menu, X } from "lucide-react";
 import { SidebarContent } from "./sidebar-content";
+import { GlobalSearch } from "./global-search";
 
 const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
   const themeState = useLocalTheme();
@@ -41,8 +41,9 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeContext.Provider value={themeState}>
       <div
-        className={`${isDark ? "dark" : ""} min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100`}
+        className={`${isDark ? "dark" : ""} min-h-screen bg-gray-100 text-gray-950 dark:bg-black dark:text-gray-100`}
       >
+        <GlobalSearch />
         {/* Desktop sidebar */}
         <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 lg:block">
           <SidebarContent isActive={isActive} themeState={themeState} />
@@ -52,9 +53,14 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
         <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950 lg:hidden">
           <Link
             href="/dashboard"
-            className="rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex items-center gap-3 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400"
           >
-            <Wordmark />
+            <span className="flex size-8 items-center justify-center rounded-md border border-gray-300 bg-gray-950 text-sm font-semibold text-white dark:border-gray-700">
+              M
+            </span>
+            <span className="text-sm font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+              Momentum
+            </span>
           </Link>
           <button
             type="button"
@@ -62,7 +68,7 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
             aria-expanded={drawerOpen}
             aria-controls="mobile-nav"
             onClick={() => setDrawerOpen(true)}
-            className="inline-flex size-10 items-center justify-center rounded-md text-gray-600 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
+            className="inline-flex size-10 items-center justify-center rounded-md text-gray-600 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
           >
             <Menu className="size-5" aria-hidden="true" />
           </button>
@@ -81,18 +87,18 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
               aria-label="Close navigation"
               tabIndex={-1}
               onClick={() => setDrawerOpen(false)}
-              className="absolute inset-0 bg-gray-950/60"
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             />
             <div
               id="mobile-nav"
-              className="relative h-full w-72 max-w-full border-r border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950"
+              className="relative h-full w-72 max-w-full border-r border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-950"
             >
               <button
                 type="button"
                 aria-label="Close navigation"
                 autoFocus
                 onClick={() => setDrawerOpen(false)}
-                className="absolute right-3 top-4 inline-flex size-9 items-center justify-center rounded-md text-gray-500 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
+                className="absolute right-3 top-4 inline-flex size-9 items-center justify-center rounded-md text-gray-500 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
               >
                 <X className="size-4" aria-hidden="true" />
               </button>

@@ -27,9 +27,9 @@ export function OnboardingProgress({ current, total }: ProgressProps) {
               aria-hidden="true"
               className={`flex size-6 items-center justify-center rounded-full border text-xs font-medium transition-colors duration-150 ${
                 state === "current"
-                  ? "border-blue-600 bg-blue-600 text-white"
+                  ? "border-gray-950 bg-gray-950 text-white dark:border-gray-100 dark:bg-gray-100 dark:text-gray-950"
                   : state === "done"
-                    ? "border-blue-600/40 dark:border-blue-500/40 bg-blue-600/10 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500"
+                    ? "border-emerald-700 bg-emerald-950 text-emerald-400"
                     : "border-gray-200 dark:border-gray-800 bg-transparent text-gray-500 dark:text-gray-400"
               }`}
             >

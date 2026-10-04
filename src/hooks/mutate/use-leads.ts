@@ -1,6 +1,7 @@
 import apis from "@/services/api-services";
 import {
   CreateLeadFormValues,
+  CreateActivityInput,
   CreateLeadResponse,
   ErrorResponse,
 } from "@/types/common";
@@ -23,6 +24,9 @@ export const useCreateLead = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["leads"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["pipeline-leads"],
       });
     },
   });
@@ -51,6 +55,42 @@ export const useUpdateLead = () => {
 
       await queryClient.invalidateQueries({
         queryKey: ["get-lead-by-id", id],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["pipeline-leads"],
+      });
+    },
+  });
+};
+
+export const useDeleteLead = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<ErrorResponse>, string>({
+    mutationFn: async (id) => {
+      await apis.leads.deleteLead(id);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["leads"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["pipeline-leads"],
+      });
+    },
+  });
+};
+
+export const useCreateLeadActivity = (leadId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<ErrorResponse>, CreateActivityInput>({
+    mutationFn: async (data) => {
+      await apis.leads.createActivity(leadId, data);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["lead-activities", leadId],
       });
     },
   });

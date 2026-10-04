@@ -5,7 +5,6 @@ export const dynamicQueryEndpoint = (
 
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== "") {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
       queryParams.append(key, String(value));
     }
   });

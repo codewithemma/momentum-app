@@ -50,7 +50,7 @@ export interface CreateLeadFormValues {
   industry: string;
   source: string;
   notes: string;
-  nextFollowUp: string;
+  nextFollowUpAt?: string | null;
 }
 
 export interface Lead {
@@ -65,9 +65,58 @@ export interface Lead {
   source: string;
   status: LeadStatus;
   notes: string;
-  nextFollowUpAt: string;
+  nextFollowUpAt: string | null;
+  activities: LeadActivities[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LeadActivities {
+  id: string;
+  leadId: string;
+  type: ActivityType;
+  title: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DashboardRecentActivity {
+  id: string;
+  type: ActivityType;
+  title: string;
+  description: string | null;
+  createdAt: string;
+  lead: {
+    id: string;
+    name: string;
+    company: string | null;
+  };
+}
+
+export interface DashboardRecentActivitiesResponse {
+  activities: DashboardRecentActivity[];
+}
+
+export type ActivityType =
+  | "LEAD_CREATED"
+  | "STATUS_CHANGED"
+  | "FOLLOW_UP_SCHEDULED"
+  | "FOLLOW_UP_UPDATED"
+  | "FOLLOW_UP_CLEARED"
+  | "NOTE"
+  | "CALL"
+  | "EMAIL"
+  | "MEETING";
+
+export interface GetLeadActivitiesResponse {
+  activities: LeadActivities[];
+}
+
+export interface CreateActivityInput {
+  type: ActivityType;
+  title: string;
+  description: string;
 }
 
 export interface CreateLeadResponse {
@@ -84,12 +133,45 @@ export interface GetLeadResponse {
   lead: Lead;
 }
 
-enum LeadStatus {
-  NEW = "NEW",
-  CONTACTED = "CONTACTED",
-  REPLIED = "REPLIED",
-  INTERESTED = "INTERESTED",
-  PROPOSAL = "PROPOSAL",
-  WON = "WON",
-  LOST = "LOST",
+export interface DashboardOverview {
+  totalLeads: number;
+  activeLeads: number;
+  followUpsDue: number;
+  won: number;
 }
+
+export interface DashboardPipelineRow {
+  status: LeadStatus;
+  count: number;
+}
+
+export interface DashboardPipelineResponse {
+  pipeline: DashboardPipelineRow[];
+}
+
+export interface DashboardNeedsAttentionLead {
+  id: string;
+  name: string;
+  company: string;
+  nextFollowUpAt: string;
+}
+
+export interface DashboardNeedsAttentionGroup {
+  count: number;
+  leads: DashboardNeedsAttentionLead[];
+}
+
+export interface DashboardNeedsAttentionResponse {
+  overdue: DashboardNeedsAttentionGroup;
+  dueToday: DashboardNeedsAttentionGroup;
+  upcoming: DashboardNeedsAttentionGroup;
+}
+
+export type LeadStatus =
+  | "NEW"
+  | "CONTACTED"
+  | "REPLIED"
+  | "INTERESTED"
+  | "PROPOSAL"
+  | "WON"
+  | "LOST";
