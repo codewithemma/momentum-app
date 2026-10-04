@@ -27,12 +27,12 @@ export function CompletionState() {
           >
             Add your first lead <span aria-hidden="true">&rarr;</span>
           </Link>
-          <button
-            type="button"
+          <Link
+            href={routes.dashboard.home}
             className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-gray-300 bg-transparent px-4 text-sm font-medium text-gray-600 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50 hover:text-gray-950 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-900 dark:hover:text-gray-100 dark:focus-visible:ring-offset-gray-950 sm:w-auto"
           >
-            I’ll do this later
-          </button>
+            Go to dashboard
+          </Link>
         </div>
       </div>
     </div>
