@@ -16,14 +16,24 @@ import { useCreateLead } from "@/hooks/mutate/use-leads";
 import { toast } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const CreateNewLeadClientPage = () => {
   const { mutate, isPending } = useCreateLead();
   const router = useRouter();
   const { isDark } = useTheme();
+  const { data: session } = useSession();
   const [values, setValues] = useState<NewLeadInput>(EMPTY);
   const [nameError, setNameError] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const defaultLeadSource = session?.user?.defaultLeadSource;
+    if (!defaultLeadSource || values.source) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setValues((current) => ({ ...current, source: defaultLeadSource }));
+  }, [session?.user?.defaultLeadSource, values.source]);
 
   function update<K extends keyof NewLeadInput>(key: K, value: string) {
     setValues((v) => ({ ...v, [key]: value }));

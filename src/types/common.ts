@@ -6,7 +6,38 @@ export interface ErrorResponse {
   message: string;
 }
 
+export type NotificationType = "FOLLOW_UP_DUE" | "FOLLOW_UP_OVERDUE";
+
+export interface Notification {
+  id: string;
+  userId: string;
+  leadId: string | null;
+  type: NotificationType | string;
+  title: string;
+  message: string;
+  dedupeKey: string;
+  read: boolean;
+  readAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type UnreadCountResponse =
+  | number
+  | { count: number }
+  | { unreadCount: number };
+
 export type UserRoles = "DEVELOPER" | "DESIGNER";
+
+export type LeadSource =
+  | "INSTAGRAM"
+  | "LINKEDIN"
+  | "X"
+  | "COLD_EMAIL"
+  | "REFERRAL"
+  | "FREELANCE_PLATFORM"
+  | "NETWORKING"
+  | "OTHER";
 
 export interface SessionUser {
   id: string;
@@ -17,6 +48,7 @@ export interface SessionUser {
   role: UserRoles;
   isEmailVerified: boolean;
   createdAt: string;
+  defaultLeadSource?: LeadSource | null;
 }
 
 export interface QueryParams {

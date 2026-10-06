@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { SidebarContent } from "./sidebar-content";
 import { GlobalSearch } from "./global-search";
+import { NotificationBell } from "./notification-bell";
 
 const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
   const themeState = useLocalTheme();
@@ -44,6 +45,9 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
         className={`${isDark ? "dark" : ""} min-h-screen bg-gray-100 text-gray-950 dark:bg-black dark:text-gray-100`}
       >
         <GlobalSearch />
+        <div className="fixed right-6 top-4 z-40 hidden lg:block">
+          <NotificationBell />
+        </div>
         {/* Desktop sidebar */}
         <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 lg:block">
           <SidebarContent isActive={isActive} themeState={themeState} />
@@ -62,16 +66,19 @@ const LayoutClientPage = ({ children }: { children: React.ReactNode }) => {
               Momentum
             </span>
           </Link>
-          <button
-            type="button"
-            aria-label="Open navigation"
-            aria-expanded={drawerOpen}
-            aria-controls="mobile-nav"
-            onClick={() => setDrawerOpen(true)}
-            className="inline-flex size-10 items-center justify-center rounded-md text-gray-600 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
-          >
-            <Menu className="size-5" aria-hidden="true" />
-          </button>
+          <div className="flex items-center gap-1">
+            <NotificationBell />
+            <button
+              type="button"
+              aria-label="Open navigation"
+              aria-expanded={drawerOpen}
+              aria-controls="mobile-nav"
+              onClick={() => setDrawerOpen(true)}
+              className="inline-flex size-10 items-center justify-center rounded-md text-gray-600 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100 motion-reduce:transition-none"
+            >
+              <Menu className="size-5" aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
         {/* Mobile drawer */}

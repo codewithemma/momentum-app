@@ -10,12 +10,20 @@ import {
   DashboardPipelineResponse,
   DashboardRecentActivitiesResponse,
   OnboardingFormValues,
+  Notification,
+  UnreadCountResponse,
+  LeadSource,
 } from "@/types/common";
 
 const apis = {
   auth: {
     completeOnboarding: (data: OnboardingFormValues) =>
       server.post("/auth/complete-onboarding", data),
+  },
+  users: {
+    updateMe: (data: { name: string }) => server.patch("/users/me", data),
+    updateDefaultLeadSource: (defaultLeadSource: LeadSource | null) =>
+      server.patch("/users/me/default-lead-source", { defaultLeadSource }),
   },
   leads: {
     createLead: (data: CreateLeadFormValues) =>
@@ -43,6 +51,13 @@ const apis = {
       server.get<DashboardRecentActivitiesResponse>(
         "/dashboard/recent-activities",
       ),
+  },
+  notifications: {
+    getAll: () => server.get<Notification[]>("/notifications"),
+    getUnreadCount: () =>
+      server.get<UnreadCountResponse>("/notifications/unread-count"),
+    markAsRead: (id: string) => server.patch(`/notifications/${id}/read`),
+    markAllAsRead: () => server.patch("/notifications/read-all"),
   },
 };
 
