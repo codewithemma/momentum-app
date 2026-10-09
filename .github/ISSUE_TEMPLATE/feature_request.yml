@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest an improvement for Momentum.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea. For large changes, please discuss the proposal
+        with maintainers before starting implementation.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What user need or workflow would this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior or experience you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches or workarounds have you tried?
+    validations:
+      required: false
